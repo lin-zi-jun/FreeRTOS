@@ -116,7 +116,7 @@ void  Query_Tast(void *para)
 	UART_PRINTF("---------------------------------------5-------------------------------------------------\r\n\r\n");
 	
 	taskEXIT_CRITICAL();
-	vTaskDelay(10); 
+	vTaskDelay(10000); 
 	}
 	
 }
