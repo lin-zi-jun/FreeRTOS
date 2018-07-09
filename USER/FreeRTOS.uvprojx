@@ -147,7 +147,7 @@
             <RestoreSysVw>1</RestoreSysVw>
           </Target>
           <RunDebugAfterBuild>0</RunDebugAfterBuild>
-          <TargetSelection>11</TargetSelection>
+          <TargetSelection>6</TargetSelection>
           <SimDlls>
             <CpuDll></CpuDll>
             <CpuDllArguments></CpuDllArguments>
@@ -161,7 +161,7 @@
             <PeripheralDll></PeripheralDll>
             <PeripheralDllArguments></PeripheralDllArguments>
             <InitializationFile></InitializationFile>
-            <Driver>STLink\ST-LINKIII-KEIL_SWO.dll</Driver>
+            <Driver>Segger\JL2CM3.dll</Driver>
           </TargetDlls>
         </DebugOption>
         <Utilities>
@@ -365,7 +365,7 @@
               <MiscControls></MiscControls>
               <Define>STM32F10X_HD,USE_STDPERIPH_DRIVER</Define>
               <Undefine></Undefine>
-              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\SYSTEM;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM3</IncludePath>
+              <IncludePath>..\USER;..\CORE;..\STM32F10x_FWLib\inc;..\FreeRTOS\include;..\FreeRTOS\portable\RVDS\ARM_CM3;..\SYSTEM</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -447,6 +447,31 @@
               <FileName>My_task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\My_task.c</FilePath>
+            </File>
+            <File>
+              <FileName>Timer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\Timer.c</FilePath>
+            </File>
+            <File>
+              <FileName>Static_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\Static_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>Dynamic_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\Dynamic_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>List_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\List_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>Query_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\Query_Task.c</FilePath>
             </File>
           </Files>
         </Group>
