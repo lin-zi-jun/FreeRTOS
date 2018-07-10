@@ -73,8 +73,8 @@ void USART1_INIT(void){
     GPIO_InitTypeDef GPIO_InitStructure;
     NVIC_InitTypeDef NVIC_InitStructure;
     USART_InitTypeDef USART_InitStructure;   
-    
-    UART_FIFO_CLEAR(&UART1_FIFO);
+//    
+//    UART_FIFO_CLEAR(&UART1_FIFO);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 | RCC_APB2Periph_AFIO|RCC_APB2Periph_GPIOA, ENABLE);
     
 
@@ -87,10 +87,10 @@ void USART1_INIT(void){
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
     
-    USART_DeInit(USART1);
+//    USART_DeInit(USART1);
     
 		NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
@@ -105,17 +105,33 @@ void USART1_INIT(void){
 		USART_Init(USART1, &USART_InitStructure);
     USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
     USART_Cmd(USART1, ENABLE);
-    MAIN_USART_DMA_CONFIGURATION();
+//    MAIN_USART_DMA_CONFIGURATION();
 }
 // 主串口的硬件管脚配置，串口配置以及初始化
 
-void USART1_IRQHandler_RUN(void){
+u8 URBuf[10]={0};
+u8 Rnum=0;
+extern QueueHandle_t Message_Queue;
+void USART1_IRQHandler(void){
     u8 ch;
-  
+		BaseType_t err=errQUEUE_EMPTY;
+		BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+	
     if(((USART1->SR)&(USART_FLAG_RXNE)) != 0)    
     {
-        ch = USART1->DR;     
-        UART_FIFO_WRITE(&UART1_FIFO,ch);   
+        ch = USART1->DR;  
+				URBuf[Rnum]=ch;
+				Rnum++;
+				if(ch=='\n')
+				{
+						err=xQueueSendFromISR(Message_Queue,URBuf,&xHigherPriorityTaskWoken);
+						if(err==errQUEUE_FULL) UART_PRINTF("队列已满\r\r");
+						UART_PRINTF("%s\r\n",URBuf);
+						memset(URBuf,0,10);
+						Rnum=0;
+						portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+				}
+       
     }
 }
 // 主串口的中断处理程序

@@ -14,12 +14,16 @@
 #include "stdio.h"
 #include "string.h"
 #include "Timer.h"
+#include "queue.h"
+#include "semphr.h"
+
 
 #include "Static_Task.h"
 #include "Dynamic_Task.h"
 #include "List_Task.h"
 #include "Queue_Task.h"
 #include "Query_Task.h"
+#include "BinarySemaphore.h"
 
 
 #endif

@@ -6,6 +6,8 @@ TaskHandle_t Start_Task_Handler;
 void Start_Tast(void *Para);
 void CreateListTask(void);
 void CreateHeatTask(void);
+void CreateQueryTask(void);
+void TIME_INIT(void);
 int main(void)
 {
 		USART1_INIT();
@@ -28,7 +30,9 @@ void Start_Tast(void *Para)
 		taskENTER_CRITICAL();
 
 //    CreateListTask();
+//		Create_Queue_Task();
 		CreateQueryTask();
+		Create_BIN_Task();
 		CreateHeatTask();
 		vTaskDelete(Start_Task_Handler);
 		taskEXIT_CRITICAL();

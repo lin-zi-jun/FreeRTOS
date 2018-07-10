@@ -32,7 +32,7 @@ void TIM2_Int_Init(void)
 
 
 	NVIC_InitStructure.NVIC_IRQChannel = TIM2_IRQn;  
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;  
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7;  
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0; 
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);  
@@ -57,7 +57,7 @@ void TIM3_Int_Init(void)
 	TIM_ITConfig(TIM3,TIM_IT_Update,ENABLE ); 					
 
 	NVIC_InitStructure.NVIC_IRQChannel = TIM3_IRQn;  			
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;  	
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;  				//作为运行管理时基，优先级需脱离系统管理	
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  		
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; 		
 	NVIC_Init(&NVIC_InitStructure);  							
@@ -84,7 +84,7 @@ void TIM4_Int_Init(void)
 
 
 	NVIC_InitStructure.NVIC_IRQChannel = TIM4_IRQn;  
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;  
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7;  
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0; 
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);  
@@ -109,7 +109,7 @@ void TIM5_Int_Init(void)
 	TIM_ITConfig(TIM5,TIM_IT_Update,ENABLE ); 					
 
 	NVIC_InitStructure.NVIC_IRQChannel = TIM5_IRQn;  			
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 5;  	
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7;  	
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  		
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; 		
 	NVIC_Init(&NVIC_InitStructure);  							
@@ -134,7 +134,7 @@ void TIM6_Int_Init(void)
 
 
 	NVIC_InitStructure.NVIC_IRQChannel = TIM6_IRQn;  
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 4;  
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7;  
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0; 
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
 	NVIC_Init(&NVIC_InitStructure);  
@@ -159,7 +159,7 @@ void TIM7_Int_Init(void)
 	TIM_ITConfig(TIM7,TIM_IT_Update,ENABLE ); 					
 
 	NVIC_InitStructure.NVIC_IRQChannel = TIM7_IRQn;  			
-	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 5;  	
+	NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7;  	
 	NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;  		
 	NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE; 		
 	NVIC_Init(&NVIC_InitStructure);  							
@@ -168,14 +168,22 @@ void TIM7_Int_Init(void)
 }
 
 
-
+u8 UQRBuf[10]={"你好"};
+extern QueueHandle_t Message_Queue;
 void TIM2_IRQHandler(void)
 {
 	
+		BaseType_t err=errQUEUE_EMPTY;
+		BaseType_t xHigherPriorityTaskWoken=pdFALSE;
 	if(TIM_GetITStatus(TIM2,TIM_IT_Update)==SET) //溢出中断
 	{
-		UART_PRINTF("TIM2输出.......\r\n");
+//						err=xQueueSendFromISR(Message_Queue,UQRBuf,&xHigherPriorityTaskWoken);
+//						if(err==errQUEUE_FULL) UART_PRINTF("队列已满\r\r");
+//						UART_PRINTF("%s\r\n",UQRBuf);
+//						memset(UQRBuf,0,10);
+//						portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 	}
+	
 	TIM_ClearITPendingBit(TIM2,TIM_IT_Update);  //清除中断标志位
 }
 
@@ -189,13 +197,26 @@ void TIM3_IRQHandler(void)
 	TIM_ClearITPendingBit(TIM3,TIM_IT_Update);  //清除中断标志位
 }
 
-
+extern SemaphoreHandle_t BinarySemaphore;
 void TIM4_IRQHandler(void)
 {
-	
+	BaseType_t err=pdFALSE;
+	BaseType_t pxHigherPriorityTaskWoken;
 	if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) //溢出中断
 	{
-		UART_PRINTF("TIM4输出.......\r\n");
+		if(BinarySemaphore!=NULL)
+		{
+				err=xSemaphoreGiveFromISR(BinarySemaphore,&pxHigherPriorityTaskWoken);
+				if(err==pdFALSE)
+				{
+						UART_PRINTF("Send Fail\t");
+				}else
+				{
+						UART_PRINTF("Send OK\t");
+				}
+		}
+		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
+		
 	}
 	TIM_ClearITPendingBit(TIM4,TIM_IT_Update);  //清除中断标志位
 }
@@ -229,9 +250,9 @@ void TIM7_IRQHandler(void)
 
 void TIME_INIT(void)
 {
-//	TIM2_Int_Init();
-//	TIM3_Int_Init();
-//	TIM4_Int_Init();
+	TIM2_Int_Init();
+	TIM3_Int_Init();
+	TIM4_Int_Init();
 //	TIM5_Int_Init();
 //	TIM6_Int_Init();
 //	TIM7_Int_Init();

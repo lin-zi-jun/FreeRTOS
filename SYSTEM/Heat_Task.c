@@ -23,13 +23,12 @@ void Heat_Tast(void *para)
 		
 		while(1)
 		{
-				HTime++;
 			 taskENTER_CRITICAL();
-
+				HTime++;
 				UART_PRINTF("$MCU:%d\t",HTime);
-
 			 taskEXIT_CRITICAL();
-			 delay_xms(1000);
+			delay_xms(1000);
+			 
 		}
 
 }
