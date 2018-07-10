@@ -25,7 +25,7 @@ void Heat_Tast(void *para)
 		{
 			 taskENTER_CRITICAL();
 				HTime++;
-				UART_PRINTF("$MCU:%d\t",HTime);
+				UART_PRINTF("$MCU:%d\r\n",HTime);
 			 taskEXIT_CRITICAL();
 			delay_xms(1000);
 			 

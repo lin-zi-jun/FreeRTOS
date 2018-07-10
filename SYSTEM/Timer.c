@@ -168,13 +168,13 @@ void TIM7_Int_Init(void)
 }
 
 
-u8 UQRBuf[10]={"你好"};
+//u8 UQRBuf[10]={"你好"};
 extern QueueHandle_t Message_Queue;
 void TIM2_IRQHandler(void)
 {
 	
-		BaseType_t err=errQUEUE_EMPTY;
-		BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+//		BaseType_t err=errQUEUE_EMPTY;
+//		BaseType_t xHigherPriorityTaskWoken=pdFALSE;
 	if(TIM_GetITStatus(TIM2,TIM_IT_Update)==SET) //溢出中断
 	{
 //						err=xQueueSendFromISR(Message_Queue,UQRBuf,&xHigherPriorityTaskWoken);
@@ -200,33 +200,40 @@ void TIM3_IRQHandler(void)
 extern SemaphoreHandle_t BinarySemaphore;
 void TIM4_IRQHandler(void)
 {
-	BaseType_t err=pdFALSE;
-	BaseType_t pxHigherPriorityTaskWoken;
+//	BaseType_t err=pdFALSE;
+//	BaseType_t pxHigherPriorityTaskWoken;
 	if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) //溢出中断
 	{
-		if(BinarySemaphore!=NULL)
-		{
-				err=xSemaphoreGiveFromISR(BinarySemaphore,&pxHigherPriorityTaskWoken);
-				if(err==pdFALSE)
-				{
-						UART_PRINTF("Send Fail\t");
-				}else
-				{
-						UART_PRINTF("Send OK\t");
-				}
-		}
-		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
+//		if(BinarySemaphore!=NULL)
+//		{
+//				err=xSemaphoreGiveFromISR(BinarySemaphore,&pxHigherPriorityTaskWoken);
+//				if(err==pdFALSE)
+//				{
+//						UART_PRINTF("Send Fail\t");
+//				}else
+//				{
+//						UART_PRINTF("Send OK\t");
+//				}
+//		}
+//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
 		
 	}
 	TIM_ClearITPendingBit(TIM4,TIM_IT_Update);  //清除中断标志位
 }
 
+extern SemaphoreHandle_t CountSemaphore;
 void TIM5_IRQHandler(void)
 {
+//				BaseType_t err=pdFALSE;
+//			 BaseType_t pxHigherPriorityTaskWoken;
+//			u8 semavalue=0;
 	if(TIM_GetITStatus(TIM5,TIM_IT_Update)==SET) //溢出中断
 	{
-		UART_PRINTF("TIM5输出.......\r\n");
+//			err=xSemaphoreGiveFromISR(CountSemaphore,&pxHigherPriorityTaskWoken);
+//			if(err==pdFALSE)
+//			UART_PRINTF("定时器：信号量已满\t");
 	}
+//	portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
 	TIM_ClearITPendingBit(TIM5,TIM_IT_Update);  //清除中断标志位
 }
 void TIM6_IRQHandler(void)
@@ -234,7 +241,7 @@ void TIM6_IRQHandler(void)
 	
 	if(TIM_GetITStatus(TIM6,TIM_IT_Update)==SET) //溢出中断
 	{
-		UART_PRINTF("TIM6输出.......\r\n");
+//		UART_PRINTF("TIM6输出.......\r\n");
 	}
 	TIM_ClearITPendingBit(TIM6,TIM_IT_Update);  //清除中断标志位
 }
@@ -243,7 +250,7 @@ void TIM7_IRQHandler(void)
 {
 	if(TIM_GetITStatus(TIM7,TIM_IT_Update)==SET) //溢出中断
 	{
-		UART_PRINTF("TIM7输出.......\r\n");
+//		UART_PRINTF("TIM7输出.......\r\n");
 	}
 	TIM_ClearITPendingBit(TIM7,TIM_IT_Update);  //清除中断标志位
 }
@@ -253,9 +260,9 @@ void TIME_INIT(void)
 	TIM2_Int_Init();
 	TIM3_Int_Init();
 	TIM4_Int_Init();
-//	TIM5_Int_Init();
-//	TIM6_Int_Init();
-//	TIM7_Int_Init();
+	TIM5_Int_Init();
+	TIM6_Int_Init();
+	TIM7_Int_Init();
 }
 
 
