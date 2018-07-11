@@ -16,6 +16,7 @@
 #include "Timer.h"
 #include "queue.h"
 #include "semphr.h"
+#include "timers.h"
 
 
 #include "Static_Task.h"
@@ -24,6 +25,7 @@
 #include "Queue_Task.h"
 #include "Query_Task.h"
 #include "BinarySemaphore.h"
+#include "TimerTask.h"
 
 
 #endif

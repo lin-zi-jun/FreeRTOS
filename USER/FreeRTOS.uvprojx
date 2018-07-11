@@ -464,6 +464,11 @@
               <FilePath>..\SYSTEM\Dynamic_Task.c</FilePath>
             </File>
             <File>
+              <FileName>TimerTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\TimerTask.c</FilePath>
+            </File>
+            <File>
               <FileName>List_Task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\List_Task.c</FilePath>
@@ -487,6 +492,21 @@
               <FileName>BinarySemaphore.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\BinarySemaphore.c</FilePath>
+            </File>
+            <File>
+              <FileName>Reversed_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\Reversed_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>Mutual_Task.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\Mutual_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>CountSemaphore.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\CountSemaphore.c</FilePath>
             </File>
           </Files>
         </Group>
