@@ -168,20 +168,22 @@ void TIM7_Int_Init(void)
 }
 
 
-//u8 UQRBuf[10]={"你好"};
+u8 UQRBuf[10]={"你好"};
 extern QueueHandle_t Message_Queue;
 void TIM2_IRQHandler(void)
 {
 	
-//		BaseType_t err=errQUEUE_EMPTY;
-//		BaseType_t xHigherPriorityTaskWoken=pdFALSE;
+		BaseType_t err=errQUEUE_EMPTY;
+		BaseType_t xHigherPriorityTaskWoken=pdFALSE;
 	if(TIM_GetITStatus(TIM2,TIM_IT_Update)==SET) //溢出中断
 	{
-//						err=xQueueSendFromISR(Message_Queue,UQRBuf,&xHigherPriorityTaskWoken);
-//						if(err==errQUEUE_FULL) UART_PRINTF("队列已满\r\r");
-//						UART_PRINTF("%s\r\n",UQRBuf);
+			if(Message_Queue!=NULL){
+						err=xQueueSendFromISR(Message_Queue,UQRBuf,&xHigherPriorityTaskWoken);
+						if(err==errQUEUE_FULL) UART_PRINTF("队列已满\r\r");
+						UART_PRINTF("Time2发送：%s\r\n",UQRBuf);
 //						memset(UQRBuf,0,10);
-//						portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+						portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+			}
 	}
 	
 	TIM_ClearITPendingBit(TIM2,TIM_IT_Update);  //清除中断标志位
@@ -198,26 +200,38 @@ void TIM3_IRQHandler(void)
 }
 
 extern SemaphoreHandle_t BinarySemaphore;
+extern TaskHandle_t NOTIFY_BIN_RECV_Task_Headler;
 void TIM4_IRQHandler(void)
 {
-//	BaseType_t err=pdFALSE;
-//	BaseType_t pxHigherPriorityTaskWoken;
+	BaseType_t err=pdFALSE;
+	BaseType_t pxHigherPriorityTaskWoken;
 	if(TIM_GetITStatus(TIM4,TIM_IT_Update)==SET) //溢出中断
 	{
-//		if(BinarySemaphore!=NULL)
-//		{
-//				err=xSemaphoreGiveFromISR(BinarySemaphore,&pxHigherPriorityTaskWoken);
-//				if(err==pdFALSE)
-//				{
-//						UART_PRINTF("Send Fail\t");
-//				}else
-//				{
-//						UART_PRINTF("Send OK\t");
-//				}
-//		}
-//		portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
+		if(BinarySemaphore!=NULL)
+		{
+				err=xSemaphoreGiveFromISR(BinarySemaphore,&pxHigherPriorityTaskWoken);
+				if(err==pdFALSE)
+				{
+						UART_PRINTF("Send Fail\t");
+				}else
+				{
+						UART_PRINTF("Send OK\t");
+				}
+				portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
+		}
 		
+		
+		if(NOTIFY_BIN_RECV_Task_Headler!=NULL)
+		{
+				vTaskNotifyGiveFromISR(NOTIFY_BIN_RECV_Task_Headler,&pxHigherPriorityTaskWoken);
+				portYIELD_FROM_ISR(pxHigherPriorityTaskWoken);
+		}
+		
+
 	}
+	
+	
+	
 	TIM_ClearITPendingBit(TIM4,TIM_IT_Update);  //清除中断标志位
 }
 

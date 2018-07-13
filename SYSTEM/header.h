@@ -17,7 +17,7 @@
 #include "queue.h"
 #include "semphr.h"
 #include "timers.h"
-
+#include "event_groups.h"
 
 #include "Static_Task.h"
 #include "Dynamic_Task.h"
@@ -26,6 +26,7 @@
 #include "Query_Task.h"
 #include "BinarySemaphore.h"
 #include "TimerTask.h"
-
+#include "Event_Group.h"
+#include "NotifyBInTask.h"
 
 #endif

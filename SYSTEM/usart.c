@@ -124,12 +124,14 @@ void USART1_IRQHandler(void){
 				Rnum++;
 				if(ch=='\n')
 				{
-						err=xQueueSendFromISR(Message_Queue,URBuf,&xHigherPriorityTaskWoken);
-						if(err==errQUEUE_FULL) UART_PRINTF("队列已满\r\r");
-						UART_PRINTF("%s\r\n",URBuf);
-						memset(URBuf,0,10);
-						Rnum=0;
-						portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+						if(Message_Queue!=NULL){
+								err=xQueueSendFromISR(Message_Queue,URBuf,&xHigherPriorityTaskWoken);
+								if(err==errQUEUE_FULL) UART_PRINTF("队列已满\r\r");
+								UART_PRINTF("%s\r\n",URBuf);
+								memset(URBuf,0,10);
+								Rnum=0;
+								portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
+						}
 				}
        
     }

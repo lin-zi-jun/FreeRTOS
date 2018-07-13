@@ -46,7 +46,7 @@ void COUNT_SEND_Task(void *para)
 			semavalue=uxSemaphoreGetCount(CountSemaphore);
 			UART_PRINTF("当前计数信号量:%d\t",semavalue);
 			taskEXIT_CRITICAL();
-			delay_xms(1000);
+			vTaskDelay(1000);
 	}
 }
 
@@ -64,6 +64,6 @@ void COUNT_RECV_Task(void *para)
 				semavalue=uxSemaphoreGetCount(CountSemaphore); 
 				UART_PRINTF("Take后还剩:%d\r\n",semavalue);
 //				taskEXIT_CRITICAL();
-				delay_xms(600);
+				vTaskDelay(1500);
 		}
 }

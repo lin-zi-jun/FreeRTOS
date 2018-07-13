@@ -434,6 +434,11 @@
               <FilePath>..\SYSTEM\usart.c</FilePath>
             </File>
             <File>
+              <FileName>NotifyCountTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\NotifyCountTask.c</FilePath>
+            </File>
+            <File>
               <FileName>delay.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\delay.c</FilePath>
@@ -507,6 +512,16 @@
               <FileName>CountSemaphore.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\CountSemaphore.c</FilePath>
+            </File>
+            <File>
+              <FileName>Event_Group.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\Event_Group.c</FilePath>
+            </File>
+            <File>
+              <FileName>NotifyBinTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\NotifyBinTask.c</FilePath>
             </File>
           </Files>
         </Group>
