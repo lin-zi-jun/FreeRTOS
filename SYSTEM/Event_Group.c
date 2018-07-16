@@ -69,7 +69,7 @@ void Event_Set_Bit_Task(void *Para)
 
 void Event_Query_Task(void *Para)
 {
-	EventBits_t NewValue,LastValue;
+	EventBits_t NewValue;
 	while(1)
 	{
 			NewValue=xEventGroupGetBits(EventGroupHandle);

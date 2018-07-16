@@ -10,7 +10,6 @@
 #include "delay.h"
 #include "FreeRTOS.h"
 #include "task.h"
-#include "Mytask.h"
 #include "stdio.h"
 #include "string.h"
 #include "Timer.h"
@@ -18,6 +17,7 @@
 #include "semphr.h"
 #include "timers.h"
 #include "event_groups.h"
+#include "limits.h"
 
 #include "Static_Task.h"
 #include "Dynamic_Task.h"
@@ -27,6 +27,8 @@
 #include "BinarySemaphore.h"
 #include "TimerTask.h"
 #include "Event_Group.h"
-#include "NotifyBInTask.h"
+#include "NotifyBinTask.h"
+#include "NotifyPostBoxTask.h"
+#include "NotifyEventGroupTask.h"
 
 #endif

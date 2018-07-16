@@ -54,7 +54,6 @@ void Create_Reversed_Task(void)
 
 void LOW_Task(void *para)
 {
-	u32 Low_Time=0;
 	while(1)
 	{
 			UART_PRINTF("Low «Î«Û–≈∫≈¡ø\r\n");

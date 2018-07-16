@@ -32,15 +32,13 @@ void Create_NOTIFY_BIN_Task(void)
 
 void NOTIFY_BIN_SEND_Task(void *para)
 {
-	BaseType_t err=pdFALSE;
-	
 	while(1)
 	{
-//		taskENTER_CRITICAL();
-//		xTaskNotifyGive(NOTIFY_BIN_RECV_Task_Headler);
-//		UART_PRINTF("NOTIFY_BIN_SEND_Task OK\t");
-//		taskEXIT_CRITICAL();
-//		vTaskDelay(3000);
+		taskENTER_CRITICAL();
+		xTaskNotifyGive(NOTIFY_BIN_RECV_Task_Headler);
+		UART_PRINTF("NOTIFY_BIN_SEND_Task OK\t");
+		taskEXIT_CRITICAL();
+		vTaskDelay(3000);
 	}
 		
 }
@@ -49,12 +47,11 @@ void NOTIFY_BIN_SEND_Task(void *para)
 
 void NOTIFY_BIN_RECV_Task(void *para)
 {
-	
-		BaseType_t err=pdFALSE;
+		u32 Value=0;
 		while(1)
 		{
-				ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
-				UART_PRINTF("NOTIFY_BIN_RECV_Task OK\t");
+				Value=ulTaskNotifyTake(pdTRUE,portMAX_DELAY);
+				UART_PRINTF("NOTIFY_BIN_RECV_Task OK:%d\r\n",Value);
 				vTaskDelay(1000);
 		}
 		

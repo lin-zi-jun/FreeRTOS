@@ -273,7 +273,7 @@ void TIME_INIT(void)
 {
 	TIM2_Int_Init();
 	TIM3_Int_Init();
-	TIM4_Int_Init();
+//	TIM4_Int_Init();
 	TIM5_Int_Init();
 	TIM6_Int_Init();
 	TIM7_Int_Init();

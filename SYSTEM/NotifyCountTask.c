@@ -37,7 +37,7 @@ void NOTIFY_COUNT_SEND_Task(void *para)
 		taskENTER_CRITICAL();
 		if(NOTIFY_COUNT_RECV_Task!=NULL)
 		xTaskNotifyGive(NOTIFY_COUNT_RECV_Task_Headler);
-//		UART_PRINTF("NOTIFY_COUT_SEND_Task OK\t");
+//		UART_PRINTF("NOTIFY_COUT_SEND_Task OK\r\n");
 		taskEXIT_CRITICAL();
 		vTaskDelay(50);
 	}

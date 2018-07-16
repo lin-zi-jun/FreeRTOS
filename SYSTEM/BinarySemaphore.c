@@ -34,7 +34,7 @@ void Create_BIN_Task(void)
 
 void BIN_SEND_Task(void *para)
 {
-	BaseType_t err=pdFALSE;
+//	BaseType_t err=pdFALSE;
 	
 	while(1)
 	{

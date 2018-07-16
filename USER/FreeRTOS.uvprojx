@@ -449,11 +449,6 @@
               <FilePath>..\SYSTEM\sys.c</FilePath>
             </File>
             <File>
-              <FileName>My_task.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\SYSTEM\My_task.c</FilePath>
-            </File>
-            <File>
               <FileName>Timer.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\Timer.c</FilePath>
@@ -477,6 +472,11 @@
               <FileName>List_Task.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\List_Task.c</FilePath>
+            </File>
+            <File>
+              <FileName>NotifyPostBoxTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\NotifyPostBoxTask.c</FilePath>
             </File>
             <File>
               <FileName>Query_Task.c</FileName>
@@ -522,6 +522,11 @@
               <FileName>NotifyBinTask.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\SYSTEM\NotifyBinTask.c</FilePath>
+            </File>
+            <File>
+              <FileName>NotifyEventGroupTask.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\SYSTEM\NotifyEventGroupTask.c</FilePath>
             </File>
           </Files>
         </Group>

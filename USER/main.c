@@ -17,7 +17,8 @@ void CreateTimerTask(void);
 void CreateEventTask(void);
 void Create_NOTIFY_BIN_Task(void);
 void Create_NOTIFY_COUNT_Task(void);
-
+void Create_NOTIFY_Post_Box_Task(void);
+void Create_NOTIFY_Event_Group_Task(void);
 int main(void)
 {
 		USART1_INIT();
@@ -42,7 +43,7 @@ void Start_Tast(void *Para)
 //    CreateStaticTask();
 //    CreateListTask();
 //		Create_Queue_Task();
-//		CreateQueryTask();
+		CreateQueryTask();
 //		Create_BIN_Task();
 //		Create_Reversed_Task();
 //		Create_COUNT_Task();
@@ -51,6 +52,8 @@ void Start_Tast(void *Para)
 //		CreateEventTask();
 //		Create_NOTIFY_BIN_Task();
 //		Create_NOTIFY_COUNT_Task();
+//		Create_NOTIFY_Post_Box_Task();
+//			Create_NOTIFY_Event_Group_Task();
 		CreateHeatTask();
 		vTaskDelete(Start_Task_Handler);
 		taskEXIT_CRITICAL();

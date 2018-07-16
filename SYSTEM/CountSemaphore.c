@@ -55,7 +55,6 @@ void COUNT_SEND_Task(void *para)
 void COUNT_RECV_Task(void *para)
 {
 	
-		BaseType_t err=pdFALSE;
 	  u8 semavalue=0;
 		while(1)
 		{
