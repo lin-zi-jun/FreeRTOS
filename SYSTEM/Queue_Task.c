@@ -38,8 +38,8 @@ void Queue_Task(void *para)
 			while(1)
 			{
 				taskENTER_CRITICAL();
-//				check_msg_queue();
-				delay_xms(1000);
+				check_msg_queue();
+				vTaskDelay(1000);
 				taskEXIT_CRITICAL();
 			}
 }
@@ -56,7 +56,7 @@ void RQueue_Task(void *para)
 				UART_PRINTF("接收：%s\r\n",Rbuf);
 				else
 				UART_PRINTF("队列没有数据\r\n",Rbuf);
-				delay_xms(1100);
+				vTaskDelay(1000);
 				taskEXIT_CRITICAL();
 			}
 }
@@ -74,7 +74,7 @@ void check_msg_queue(void)
     msgq_total_size=uxQueueMessagesWaiting(Message_Queue)+uxQueueSpacesAvailable(Message_Queue);//得到队列总大小，总大小=使用+剩余的。
 		p=pvPortMalloc(20);	//申请内存
 		sprintf((char*)p,"剩余项:%d/%d\t\t",msgq_remain_size,msgq_total_size);	//显示DATA_Msg消息队列总的大小
-		err=xQueueSend(Message_Queue,p,0);
+//		err=xQueueSend(Message_Queue,p,0);
 		if(err==errQUEUE_FULL) UART_PRINTF("队列已满\r\n");
 		UART_PRINTF("%s\r\r",p);
 		vPortFree(p);		//释放内存

@@ -3,7 +3,7 @@
 
 /******************创建任务与删除实验*******************/
 //任务A
-#define A_Task_PRIO 1
+#define A_Task_PRIO 2
 #define A_STK_SIZE 128
 TaskHandle_t A_Task_Handler;
 void ATast(void *para);
@@ -17,7 +17,7 @@ void BTast(void *para);
 
 void CreateDynamicTask(void)
 {
-			xTaskCreate((TaskFunction_t )ATast,
+		xTaskCreate((TaskFunction_t )ATast,
 										(const char*    )"ATast",
 										(unsigned char  )A_STK_SIZE,
 										(void*          )NULL,
@@ -41,9 +41,9 @@ void ATast(void *para)
 		{
 				ATimer++;
 				taskENTER_CRITICAL();
-				UART_PRINTF("A:%d\r\n",ATimer);
+				UART_PRINTF("动态创建方式A:%d\r\n",ATimer);
 				taskEXIT_CRITICAL();	
-				delay_xms(1000);	
+				vTaskDelay(10000);	
 		}
 }
 
@@ -54,9 +54,9 @@ void BTast(void *para)
 		{
 			 BTimer++;
 			 taskENTER_CRITICAL();
-			 UART_PRINTF("B:%d\r\n",BTimer);
+			 UART_PRINTF("动态创建方式B:%d\r\n",BTimer);
 			 taskEXIT_CRITICAL();
-			 delay_xms(1000);
+			 vTaskDelay(10000);
 		}
 
 }

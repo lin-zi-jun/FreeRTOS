@@ -925,11 +925,9 @@ BaseType_t xQueueGenericSendFromISR( QueueHandle_t xQueue, const void * const pv
 BaseType_t xReturn;
 UBaseType_t uxSavedInterruptStatus;
 Queue_t * const pxQueue = ( Queue_t * ) xQueue;
-
 	configASSERT( pxQueue );
 	configASSERT( !( ( pvItemToQueue == NULL ) && ( pxQueue->uxItemSize != ( UBaseType_t ) 0U ) ) );
 	configASSERT( !( ( xCopyPosition == queueOVERWRITE ) && ( pxQueue->uxLength != 1 ) ) );
-
 	/* RTOS ports that support interrupt nesting have the concept of a maximum
 	system call (or maximum API call) interrupt priority.  Interrupts that are
 	above the maximum system call priority are kept permanently enabled, even
@@ -945,7 +943,6 @@ Queue_t * const pxQueue = ( Queue_t * ) xQueue;
 	More information (albeit Cortex-M specific) is provided on the following
 	link: http://www.freertos.org/RTOS-Cortex-M3-M4.html */
 	portASSERT_IF_INTERRUPT_PRIORITY_INVALID();
-
 	/* Similar to xQueueGenericSend, except without blocking if there is no room
 	in the queue.  Also don't directly wake a task that was blocked on a queue
 	read, instead return a flag to say whether a context switch is required or

@@ -81,7 +81,7 @@ extern volatile unsigned long long FreeRTOSRunTimeTicks;
 #endif
 
 //╤оят
-#define vAssertCalled(char,int) printf("Error:%s,%d\r\n",char,int)
+#define vAssertCalled(char,int) UART_PRINTF("Error:%s,%d\r\n",char,int)
 #define configASSERT(x) if((x)==0) vAssertCalled(__FILE__,__LINE__)
 
 /***************************************************************************************************************/

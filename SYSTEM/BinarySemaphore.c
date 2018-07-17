@@ -52,7 +52,7 @@ void BIN_SEND_Task(void *para)
 //		}
 		
 		taskEXIT_CRITICAL();
-		delay_xms(1000);
+		vTaskDelay(5000);
 	}
 }
 
@@ -73,7 +73,7 @@ void BIN_RECV_Task(void *para)
 						UART_PRINTF("RECV OK\t");
 				}
 				
-				delay_xms(10000);
+				vTaskDelay(10000);
 	}
 }
 

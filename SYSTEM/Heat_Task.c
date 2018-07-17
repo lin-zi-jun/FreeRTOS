@@ -20,12 +20,13 @@ void CreateHeatTask(void)
 void Heat_Tast(void *para)
 {
 		static u8 HTime=0;
-		
+		u32 FreeMem=0;
 		while(1)
 		{
 			 taskENTER_CRITICAL();
 				HTime++;
-				UART_PRINTF("$MCU:%d\r\n",HTime);
+				FreeMem=xPortGetFreeHeapSize();
+				UART_PRINTF("$MCU:%d,%d\r\n",HTime,FreeMem);
 			 taskEXIT_CRITICAL();
 			delay_xms(1000);
 			 

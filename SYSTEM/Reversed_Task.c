@@ -77,7 +77,7 @@ void MIDDLE_Task(void *para)
 			taskENTER_CRITICAL();
 			UART_PRINTF("Middle Task Runing\r\n");
 			taskEXIT_CRITICAL();
-			vTaskDelay(1000);
+			vTaskDelay(5000);
 	}
 }
 
@@ -94,7 +94,7 @@ void HIGH_Task(void *para)
 			UART_PRINTF("High  Õ∑≈–≈∫≈¡ø\r\n");
 			xSemaphoreGive( ReversedSemaphore );
 			
-			vTaskDelay(1000);
+			vTaskDelay(5000);
 	}
 }
 

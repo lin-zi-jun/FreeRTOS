@@ -2,7 +2,7 @@
 
 /***************创建任务与删除实验(静态方法)*************/
 //任务C
-#define C_Task_PRIO 3
+#define C_Task_PRIO 2
 #define C_STK_SIZE 128
 StackType_t CStack[C_STK_SIZE];
 StaticTask_t C_TCB;
@@ -10,7 +10,7 @@ TaskHandle_t C_Task_Handler;
 void CTast(void *para);
 
 //任务D
-#define D_Task_PRIO 4
+#define D_Task_PRIO 2
 #define D_STK_SIZE 128
 StackType_t DStack[D_STK_SIZE];
 StaticTask_t D_TCB;
@@ -18,7 +18,7 @@ TaskHandle_t D_Task_Handler;
 void DTast(void *para);
 
 //任务E
-#define E_Task_PRIO 5
+#define E_Task_PRIO 2
 #define E_STK_SIZE 128
 StackType_t EStack[E_STK_SIZE];
 StaticTask_t E_TCB;
@@ -61,8 +61,10 @@ void CTast(void *para)
 		while(1)
 		{
 				CTimer++;
-				UART_PRINTF("C:%d\r\n",CTimer);
-				delay_xms(1000);	
+				taskENTER_CRITICAL();
+				UART_PRINTF("静态创建方法C:%d\r\n",CTimer);
+				taskEXIT_CRITICAL();
+				vTaskDelay(10000);	
 		}
 
 }
@@ -73,8 +75,10 @@ void DTast(void *para)
 		while(1)
 		{
 			 DTimer++;
-			 UART_PRINTF("D:%d\r\n",DTimer);
-			 delay_xms(1000);
+				taskENTER_CRITICAL();
+			 UART_PRINTF("静态创建方法D:%d\r\n",DTimer);
+				taskEXIT_CRITICAL();
+			 vTaskDelay(10000);
 		}
 
 }
@@ -85,7 +89,10 @@ void ETast(void *para)
 		while(1)
 		{
 			 ETimer++;
-			 delay_xms(1000);
+				taskENTER_CRITICAL();
+			 UART_PRINTF("静态创建方法E:%d\r\n",ETimer);
+				taskEXIT_CRITICAL();
+			 vTaskDelay(10000);
 		}
 
 }

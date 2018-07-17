@@ -146,7 +146,7 @@ void ListTast(void *para)
 							UART_PRINTF("ListItem3->pxPrevious             %#x					\r\n",(int)(ListItem3.pxPrevious));
 							UART_PRINTF("-------------------------------6-------------------------------\r\n\r\n");	
 							taskEXIT_CRITICAL();
-							delay_xms(10000);
+							vTaskDelay(10000);
 			}		
 }
 

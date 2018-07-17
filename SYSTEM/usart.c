@@ -63,7 +63,7 @@ void MAIN_USART_DMA_CONFIGURATION(void){
     
     // Enable DMA1 channel4 IRQ Channel
     NVIC_InitStructure.NVIC_IRQChannel = DMA1_Channel4_IRQn;
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 1;
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7;
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
     NVIC_Init(&NVIC_InitStructure);
@@ -73,8 +73,8 @@ void USART1_INIT(void){
     GPIO_InitTypeDef GPIO_InitStructure;
     NVIC_InitTypeDef NVIC_InitStructure;
     USART_InitTypeDef USART_InitStructure;   
-//    
-//    UART_FIFO_CLEAR(&UART1_FIFO);
+   
+    UART_FIFO_CLEAR(&UART1_FIFO);
     RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART1 | RCC_APB2Periph_AFIO|RCC_APB2Periph_GPIOA, ENABLE);
     
 
@@ -86,8 +86,6 @@ void USART1_INIT(void){
     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_10;
     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN_FLOATING;
     GPIO_Init(GPIOA, &GPIO_InitStructure);
-    
-//    USART_DeInit(USART1);
     
 		NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;
     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 7;
@@ -105,18 +103,17 @@ void USART1_INIT(void){
 		USART_Init(USART1, &USART_InitStructure);
     USART_ITConfig(USART1, USART_IT_RXNE, ENABLE);
     USART_Cmd(USART1, ENABLE);
-//    MAIN_USART_DMA_CONFIGURATION();
+    MAIN_USART_DMA_CONFIGURATION();
 }
 // 主串口的硬件管脚配置，串口配置以及初始化
 
-u8 URBuf[10]={0};
+u8 URBuf[20]={0};
 u8 Rnum=0;
 extern QueueHandle_t Message_Queue;
 void USART1_IRQHandler(void){
     u8 ch;
 		BaseType_t err=errQUEUE_EMPTY;
 		BaseType_t xHigherPriorityTaskWoken=pdFALSE;
-	
     if(((USART1->SR)&(USART_FLAG_RXNE)) != 0)    
     {
         ch = USART1->DR;  
@@ -125,10 +122,10 @@ void USART1_IRQHandler(void){
 				if(ch=='\n')
 				{
 						if(Message_Queue!=NULL){
-								err=xQueueSendFromISR(Message_Queue,URBuf,&xHigherPriorityTaskWoken);
-								if(err==errQUEUE_FULL) UART_PRINTF("队列已满\r\r");
-								UART_PRINTF("%s\r\n",URBuf);
-								memset(URBuf,0,10);
+								err=xQueueSendFromISR(Message_Queue,URBuf,&xHigherPriorityTaskWoken);			
+								if(err==errQUEUE_FULL) UART_PRINTF("队列已满\r\n");
+								UART_PRINTF("USART发送：%s\r\n",URBuf);
+								memset(URBuf,0,20);
 								Rnum=0;
 								portYIELD_FROM_ISR(xHigherPriorityTaskWoken);
 						}
@@ -184,8 +181,6 @@ void USART1PCReceiver(void){
             if(ch=='\n')  //如果遇到换行
             {
                 U1.R_BUF[U1.R_BUF_LEN] = 0;   //用0代替\n
-            
-
 									
                 U1.R_BUF_LEN = 0;
             }

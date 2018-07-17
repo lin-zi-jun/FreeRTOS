@@ -35,15 +35,14 @@ int main(void)
  }
 
 
-
 void Start_Tast(void *Para)
 {
 		taskENTER_CRITICAL();
 //    CreateDynamicTask();
 //    CreateStaticTask();
 //    CreateListTask();
-//		Create_Queue_Task();
-		CreateQueryTask();
+		Create_Queue_Task();
+//		CreateQueryTask();
 //		Create_BIN_Task();
 //		Create_Reversed_Task();
 //		Create_COUNT_Task();
@@ -53,7 +52,7 @@ void Start_Tast(void *Para)
 //		Create_NOTIFY_BIN_Task();
 //		Create_NOTIFY_COUNT_Task();
 //		Create_NOTIFY_Post_Box_Task();
-//			Create_NOTIFY_Event_Group_Task();
+//		Create_NOTIFY_Event_Group_Task();
 		CreateHeatTask();
 		vTaskDelete(Start_Task_Handler);
 		taskEXIT_CRITICAL();

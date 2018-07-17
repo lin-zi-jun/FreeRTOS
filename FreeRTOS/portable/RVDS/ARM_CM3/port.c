@@ -641,16 +641,15 @@ __asm uint32_t vPortGetIPSR( void )
 	{
 	uint32_t ulCurrentInterrupt;
 	uint8_t ucCurrentPriority;
-
 		/* Obtain the number of the currently executing interrupt. */
 		ulCurrentInterrupt = vPortGetIPSR();
-
+		UART_PRINTF("ulCurrentInterrupt:%d\r\n",ulCurrentInterrupt);
 		/* Is the interrupt number a user defined interrupt? */
 		if( ulCurrentInterrupt >= portFIRST_USER_INTERRUPT_NUMBER )
 		{
 			/* Look up the interrupt's priority. */
 			ucCurrentPriority = pcInterruptPriorityRegisters[ ulCurrentInterrupt ];
-
+			UART_PRINTF("ucCurrentPriority:%d\r\n",ucCurrentPriority);
 			/* The following assertion will fail if a service routine (ISR) for
 			an interrupt that has been assigned a priority above
 			configMAX_SYSCALL_INTERRUPT_PRIORITY calls an ISR safe FreeRTOS API
